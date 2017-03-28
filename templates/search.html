@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link href="//code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
+<script src="//code.jquery.com/jquery-2.2.0.min.js"></script>
+<script src="//code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<script type="text/javascript">
+
+$(function() {
+    $("#autocomplete").autocomplete({
+        source:function(request, response) {
+            $.getJSON("{{url_for('autocomplete')}}",{
+                q: request.term
+            }, function(data) {
+                response(data.json_list); 
+            });
+        },
+        minLength: 2,
+        select: function(event, ui) {
+            console.log(ui.item.value);
+        }
+    });
+})
+</script>
+
+</head>
+<body>
+    <div class="container">
+      <form>
+       <div class = "form-group">
+       <label for ="autocomplete" class="col-md-12">Enter a text and see autocomplete magic</label>
+        <input name="autocomplete" type="text" id="autocomplete" class="form-control col-md-6 input-md"/>
+        </div>
+       </form>
+    </div>
+  
+</body>
+</html>
